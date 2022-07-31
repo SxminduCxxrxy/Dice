@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="dice_1.png">
+    <title>DICE ROLL</title>
+</head>
+
+<body>
+
+    <!-- Die Area -->
+    <div class="game">
+        <!-- Die One -->
+        <div class="container">
+            <div id='dice1' class="dice dice-one">
+                <div id="dice-one-side-one" class='side one'>
+                    <div class="dot one-1"></div>
+                </div>
+                <div id="dice-one-side-two" class='side two'>
+                    <div class="dot two-1"></div>
+                    <div class="dot two-2"></div>
+                </div>
+                <div id="dice-one-side-three" class='side three'>
+                    <div class="dot three-1"></div>
+                    <div class="dot three-2"></div>
+                    <div class="dot three-3"></div>
+                </div>
+                <div id="dice-one-side-four" class='side four'>
+                    <div class="dot four-1"></div>
+                    <div class="dot four-2"></div>
+                    <div class="dot four-3"></div>
+                    <div class="dot four-4"></div>
+                </div>
+                <div id="dice-one-side-five" class='side five'>
+                    <div class="dot five-1"></div>
+                    <div class="dot five-2"></div>
+                    <div class="dot five-3"></div>
+                    <div class="dot five-4"></div>
+                    <div class="dot five-5"></div>
+                </div>
+                <div id="dice-one-side-six" class='side six'>
+                    <div class="dot six-1"></div>
+                    <div class="dot six-2"></div>
+                    <div class="dot six-3"></div>
+                    <div class="dot six-4"></div>
+                    <div class="dot six-5"></div>
+                    <div class="dot six-6"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Die Two -->
+        <div class="container">
+            <div id='dice2' class="dice dice-two">
+                <div id="dice-two-side-one" class='side one'>
+                    <div class="dot one-1"></div>
+                </div>
+                <div id="dice-two-side-two" class='side two'>
+                    <div class="dot two-1"></div>
+                    <div class="dot two-2"></div>
+                </div>
+                <div id="dice-two-side-three" class='side three'>
+                    <div class="dot three-1"></div>
+                    <div class="dot three-2"></div>
+                    <div class="dot three-3"></div>
+                </div>
+                <div id="dice-two-side-four" class='side four'>
+                    <div class="dot four-1"></div>
+                    <div class="dot four-2"></div>
+                    <div class="dot four-3"></div>
+                    <div class="dot four-4"></div>
+                </div>
+                <div id="dice-two-side-five" class='side five'>
+                    <div class="dot five-1"></div>
+                    <div class="dot five-2"></div>
+                    <div class="dot five-3"></div>
+                    <div class="dot five-4"></div>
+                    <div class="dot five-5"></div>
+                </div>
+                <div id="dice-two-side-six" class='side six'>
+                    <div class="dot six-1"></div>
+                    <div class="dot six-2"></div>
+                    <div class="dot six-3"></div>
+                    <div class="dot six-4"></div>
+                    <div class="dot six-5"></div>
+                    <div class="dot six-6"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Roll Button -->
+        <div id='roll' class='roll-button'>
+            <button type="button">Roll Dice!</button>
+        </div>
+    </div>
+
+    <!-- Player Cards -->
+    <div class="players">
+        <!-- Playing Player Indicator -->
+        <div class = "indicator" id="idc">&#10148;</div>
+        <!-- Player One -->
+        <div class="player-container">
+            <div class="playerone">
+                <div class="scorecard" id="1-score">0</div>
+                <div class="playercard" id="1-name">Player 1</div>
+            </div>
+        </div>
+        <!-- Player Two -->
+        <div class="player-container">
+            <div class="playertwo">
+                <div class="scorecard" id="2-score">0</div>
+                <div class="playercard" id="2-name">Player 2</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pop Up Message -->
+    <div class="overlay" id="overlay">
+        <span class="close" id="closebtn">&times;</span>
+        <div class="pop-container" id="pop-con">
+            <div id="win"></div>
+        </div>
+    </div>
+    
+
+    <script>
+        //Dice DOM
+        var DiceOne = document.getElementById('dice1');
+        var DiceTwo = document.getElementById('dice2');
+        var ComeOut = document.getElementById('roll');
+
+        //Indicator DOM
+        var indicator = document.getElementById('idc');
+
+        //Pop-Up DOM
+        var closebtn = document.getElementById('closebtn')
+        var overlay = document.getElementById('overlay');
+        var popcon = document.getElementById('pop-con');
+        var win = document.getElementById('win');
+
+        let scorecard = [0,0]
+        let player = 1
+
+        //Event Listener to check click on roll button
+        ComeOut.addEventListener("click", rollDice);
+
+        //Roll Function
+        function rollDice() {
+
+            //Getting a random number and turning the 2 dice
+
+            var diceOne = Math.floor((Math.random() * 6) + 1);
+            var diceTwo = Math.floor((Math.random() * 6) + 1);
+
+            for (var i = 1; i <= 6; i++) {
+                DiceOne.classList.remove('show-' + i);
+            }
+            DiceOne.classList.add('show-' + diceOne);
+
+            for (var i = 1; i <= 6; i++) {
+                DiceTwo.classList.remove('show-' + i);
+            }
+            DiceTwo.classList.add('show-' +  diceTwo);
+
+            //Player Score DOM according to the currently playing Player
+            var scorefield = document.getElementById(player + '-score');
+
+            setTimeout(()=>{console.log("\n")},20000)
+
+            //Adding Die values
+            var rollvalue = diceOne + diceTwo;
+            
+            //Updateing the new total of the players
+            scorecard[player-1] += rollvalue
+
+            //Changing the score in browser
+            scorefield.innerHTML = scorecard[player-1];
+
+            //Checking if a certain player won the game
+            if (scorecard[player-1] >= 100) {
+                overlay.style.visibility = "visible";
+                overlay.style.opacity = '1';
+                popcon.classList.add('pop');
+                win.innerHTML = 'Player ' + player + ' Won';
+                return
+            }
+
+            //Checking if the player rolled same value in 2 dice
+            if ( diceOne === diceTwo ) {
+                //Checking if the player rolled 1 from 2 dice
+                if ( diceOne === 1 & diceTwo === 1 ) {
+                    scorecard[player-1] = 0
+                    scorefield.innerHTML = scorecard[player-1];
+                    player = (player % 2) + 1;
+                }
+            }
+            else {
+                player = (player % 2) + 1;
+            }
+
+            //Indicator movement
+            if (player === 1) {
+                indicator.classList.remove('indicator-transform');
+            }
+            else if (player === 2) {
+                indicator.classList.add('indicator-transform');
+            }
+
+
+        }   
+
+        //Event Listener to check click on Close btn
+        closebtn.addEventListener("click",refresh);
+        
+        function refresh() {
+            window.location.reload();
+        }
+
+    </script>
+
+</body>
+
+</html>
